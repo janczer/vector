@@ -2,6 +2,7 @@ package vector
 
 import (
 	"fmt"
+	"math"
 	//"strconv"
 )
 
@@ -35,4 +36,105 @@ func (v Vector) Eq(w Vector) bool {
 	}
 
 	return true
+}
+
+func (v Vector) Add(w Vector) Vector {
+	if v.dimension != w.dimension {
+		panic("Vector should have the same dimension")
+	}
+
+	r := []float64{}
+
+	for i := 0; i < v.dimension; i++ {
+		r = append(r, v.coordinates[i]+w.coordinates[i])
+	}
+
+	return New(r)
+}
+
+func (v Vector) Sub(w Vector) Vector {
+	if v.dimension != w.dimension {
+		panic("Vector should have the same dimension")
+	}
+
+	r := []float64{}
+
+	for i := 0; i < v.dimension; i++ {
+		r = append(r, v.coordinates[i]-w.coordinates[i])
+	}
+
+	return New(r)
+}
+
+func (v Vector) Dot(w Vector) float64 {
+	if v.dimension != w.dimension {
+		panic("Vector should have the same dimension")
+	}
+
+	var r float64
+
+	for i := 0; i < v.dimension; i++ {
+		r += v.coordinates[i] * w.coordinates[i]
+	}
+
+	return r
+}
+
+func (v Vector) Scalar(num float64) Vector {
+	r := []float64{}
+
+	for i := 0; i < v.dimension; i++ {
+		r = append(r, v.coordinates[i]*num)
+	}
+
+	return New(r)
+}
+
+func (v Vector) Magnitude() float64 {
+	var s float64
+
+	for i := 0; i < v.dimension; i++ {
+		s = v.coordinates[i] * v.coordinates[i]
+	}
+
+	return math.Sqrt(s)
+}
+
+func (v Vector) Normalize() Vector {
+	m := v.Magnitude()
+	r := []float64{}
+
+	for i := 0; i < v.dimension; i++ {
+		r = append(r, v.coordinates[i]/m)
+	}
+
+	return New(r)
+}
+
+func (v Vector) Angle(w Vector) float64 {
+	d := v.Dot(w)
+	mag := w.Magnitude() * v.Magnitude()
+
+	return math.Acos(mag / d)
+}
+
+func (v Vector) Paraller(w Vector) bool {
+	a := v.Angle(w)
+	if a == 0 || a == 180 {
+		return true
+	}
+
+	return false
+}
+
+func (v Vector) Orthogonal(w Vector) bool {
+	if v.Angle(w) == 90 {
+		return true
+	}
+
+	return false
+}
+
+func (v Vector) Proj(w Vector) Vector {
+	return v.Normalize().Scalar(v.Normalize().Dot(w))
 }
