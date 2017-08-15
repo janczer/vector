@@ -157,28 +157,39 @@ func TestDot(t *testing.T) {
 	}
 }
 
-//func TestScalar(t *testing.T) {
-//tests := []struct {
-//vector1  []float64
-//num      float64
-//expected Vector
-//}{
-//{[]float64{1, 2, 3}, 2, New([]float64{2, 4, 6})},
-//{[]float64{2, 2, 2}, 1, New([]float64{2, 2, 2})},
-//{[]float64{2, 2, 2}, 8, New([]float64{16, 16, 16})},
-//{[]float64{1, 3, 4}, 0, New([]float64{0, 0, 0})},
-//}
+func TestScalar(t *testing.T) {
+	tests := []struct {
+		vector1  []*big.Float
+		num      *big.Float
+		expected Vector
+	}{
+		{
+			[]*big.Float{big.NewFloat(1), big.NewFloat(2), big.NewFloat(3)},
+			big.NewFloat(2),
+			New([]*big.Float{big.NewFloat(2), big.NewFloat(4), big.NewFloat(6)}),
+		},
+		{
+			[]*big.Float{big.NewFloat(1), big.NewFloat(2), big.NewFloat(3)},
+			big.NewFloat(8),
+			New([]*big.Float{big.NewFloat(8), big.NewFloat(16), big.NewFloat(24)}),
+		},
+		{
+			[]*big.Float{big.NewFloat(1), big.NewFloat(2), big.NewFloat(3)},
+			big.NewFloat(0.1),
+			New([]*big.Float{big.NewFloat(0.1), big.NewFloat(0.2), big.NewFloat(0.3)}),
+		},
+	}
 
-//for _, a := range tests {
-//v1 := New(a.vector1)
+	for _, a := range tests {
+		v1 := New(a.vector1)
 
-//s := v1.Scalar(a.num)
+		s := v1.Scalar(a.num)
 
-//if !s.Eq(a.expected) {
-//t.Errorf("%s * %.2f should be %s, got %s", v1.Print(), a.num, a.expected.Print(), s.Print())
-//}
-//}
-//}
+		if !s.Eq(a.expected) {
+			t.Errorf("%s * %.2f should be %s, got %s", v1.Print(), a.num, a.expected.Print(), s.Print())
+		}
+	}
+}
 
 //func TestMagnitude(t *testing.T) {
 //tests := []struct {

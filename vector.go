@@ -89,11 +89,11 @@ func (v Vector) Dot(w Vector) *big.Float {
 	return r
 }
 
-func (v Vector) Scalar(num float64) Vector {
+func (v Vector) Scalar(num *big.Float) Vector {
 	r := []*big.Float{}
 
 	for i := 0; i < v.dimension; i++ {
-		r = append(r, big.NewFloat(0).Mul(v.coordinates[i], big.NewFloat(num)))
+		r = append(r, big.NewFloat(0).Mul(v.coordinates[i], num))
 	}
 
 	return New(r)
