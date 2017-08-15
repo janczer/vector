@@ -6,6 +6,8 @@ import (
 	//"strconv"
 )
 
+const prec = 6
+
 type Vector struct {
 	coordinates []float64
 	dimension   int
@@ -94,7 +96,6 @@ func (v Vector) Magnitude() float64 {
 	var s float64
 
 	for i := 0; i < v.dimension; i++ {
-		//fmt.Printf("pow %f = %f\n", v.coordinates[i], math.Pow(v.coordinates[i], 2))
 		s += math.Pow(v.coordinates[i], 2.0)
 	}
 
@@ -114,18 +115,18 @@ func (v Vector) Normalize() Vector {
 
 func (v Vector) Angle(w Vector, inDegree bool) float64 {
 	d := v.Dot(w)
-	mag := v.Magnitude() * w.Magnitude()
+	mag := toFixed(v.Magnitude()*w.Magnitude(), prec)
 
 	if inDegree {
-		return math.Acos(d/mag) * 180.0 / math.Pi
+		return toFixed(math.Acos(d/mag)*180.0/math.Pi, prec)
 	}
 
-	return math.Acos(d / mag)
+	return toFixed(math.Acos(d/mag), prec)
 }
 
 func (v Vector) Paraller(w Vector) bool {
 	a := v.Angle(w, true)
-	if a == 0 || a == 180 {
+	if a == 0.0 || a == 180.0 {
 		return true
 	}
 
@@ -133,7 +134,7 @@ func (v Vector) Paraller(w Vector) bool {
 }
 
 func (v Vector) Orthogonal(w Vector) bool {
-	if v.Angle(w, true) == 90 {
+	if v.Angle(w, true) == 90.0 {
 		return true
 	}
 
@@ -142,4 +143,13 @@ func (v Vector) Orthogonal(w Vector) bool {
 
 func (v Vector) Proj(w Vector) Vector {
 	return v.Normalize().Scalar(v.Normalize().Dot(w))
+}
+
+func round(num float64) int {
+	return int(num + math.Copysign(0.5, num))
+}
+
+func toFixed(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	return float64(round(num*output)) / output
 }

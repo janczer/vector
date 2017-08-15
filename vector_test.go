@@ -180,8 +180,10 @@ func TestAngle(t *testing.T) {
 		expected float64
 	}{
 		{[]float64{3, 0}, []float64{3, 3}, 45},
-		//{[]float64{3, 0}, []float64{0, 3}, 90},
-		//{[]float64{1, 1}, []float64{1, 1}, 0},
+		{[]float64{3, 0}, []float64{0, 3}, 90},
+		{[]float64{1, 1}, []float64{-1, -1}, 180},
+		{[]float64{1, 1}, []float64{1, 1}, 0},
+		{[]float64{3, 3}, []float64{3, 3}, 0},
 	}
 
 	for _, a := range tests {
@@ -201,7 +203,7 @@ func TestParaller(t *testing.T) {
 		expected bool
 	}{
 		{[]float64{3, 0}, []float64{3, 3}, false},
-		//{[]float64{3, 3}, []float64{3, 3}, true},
+		{[]float64{30, 30}, []float64{30, 30}, true},
 	}
 
 	for _, a := range tests {
@@ -210,6 +212,26 @@ func TestParaller(t *testing.T) {
 
 		if a.expected != v1.Paraller(v2) {
 			t.Errorf("Parraler %s and %s is %t, got %t", v1.Print(), v2.Print(), a.expected, v1.Paraller(v2))
+		}
+	}
+}
+
+func TestOrthogonal(t *testing.T) {
+	tests := []struct {
+		vector1  []float64
+		vector2  []float64
+		expected bool
+	}{
+		{[]float64{3, 0}, []float64{0, 3}, true},
+		{[]float64{30, 30}, []float64{30, 30}, false},
+	}
+
+	for _, a := range tests {
+		v1 := New(a.vector1)
+		v2 := New(a.vector2)
+
+		if a.expected != v1.Orthogonal(v2) {
+			t.Errorf("Orthogonal %s and %s is %t, got %t", v1.Print(), v2.Print(), a.expected, v1.Paraller(v2))
 		}
 	}
 }
