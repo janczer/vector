@@ -3,15 +3,16 @@ package vector
 import (
 	"fmt"
 	"math"
+	"math/big"
 	//"strconv"
 )
 
 type Vector struct {
-	coordinates []float64
+	coordinates []*big.Float
 	dimension   int
 }
 
-func New(c []float64) Vector {
+func New(c []*big.Float) Vector {
 	return Vector{c, len(c)}
 }
 
@@ -43,10 +44,12 @@ func (v Vector) Add(w Vector) Vector {
 		panic("Vector should have the same dimension")
 	}
 
-	r := []float64{}
+	r := []*big.Float{}
 
 	for i := 0; i < v.dimension; i++ {
-		r = append(r, v.coordinates[i]+w.coordinates[i])
+		z := big.NewFloat(0)
+		z.Add(v.coordinates[i], w.coordinates[i])
+		r = append(r, z)
 	}
 
 	return New(r)
@@ -57,24 +60,25 @@ func (v Vector) Sub(w Vector) Vector {
 		panic("Vector should have the same dimension")
 	}
 
-	r := []float64{}
+	r := []*big.Float{}
 
 	for i := 0; i < v.dimension; i++ {
-		r = append(r, v.coordinates[i]-w.coordinates[i])
+		r = append(r, big.NewFloat(0).Sub(v.coordinates[i], w.coordinates[i]))
 	}
 
 	return New(r)
 }
 
-func (v Vector) Dot(w Vector) float64 {
+func (v Vector) Dot(w Vector) *big.Float {
 	if v.dimension != w.dimension {
 		panic("Vector should have the same dimension")
 	}
 
-	var r float64
+	var r *big.Float
 
 	for i := 0; i < v.dimension; i++ {
-		r += v.coordinates[i] * w.coordinates[i]
+		z := big.NewFloat(0).Mul(v.coordinates[i], w.coordinates[i])
+		r = z.Add(z, r)
 	}
 
 	return r
