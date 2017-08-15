@@ -8,8 +8,8 @@ Library for work with vectors.
 Methods you can use:
 
 - [Eq](#eq)
-- Add
-- Sub
+- [Add](#add)
+- [Sub](#sub)
 - Dot
 - Scalar
 - Magnitude
@@ -47,7 +47,7 @@ func main() {
 
 ## Eq
 
-Method return `true` if vector are equals:
+Method return `true` if vectors are equal:
 
 ```
 	v := vector.New([]float64{1, 2, 3})
@@ -55,4 +55,23 @@ Method return `true` if vector are equals:
 	fmt.Println(v.Eq(v2))  //true
 ```
 
+## Add
 
+This method add coordinates of two vectors, and return new `Vector`:
+
+```
+	v := vector.New([]float64{1, 2, 4})
+	v2 := vector.New([]float64{1, 1, 3})
+ 	v3 := v.Add(v2) //1+1, 2+1, 4+3
+```
+
+## Sub
+
+Method subtract coordinates of two vectors, and return new `Vector`:
+
+
+```
+	v := vector.New([]float64{1, 2, 4})
+	v2 := vector.New([]float64{1, 1, 3})
+	v3 := v.Sub(v2) //1-1, 2-1, 4-3
+```
