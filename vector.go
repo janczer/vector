@@ -17,7 +17,7 @@ func New(c []float64) Vector {
 	return Vector{c, len(c)}
 }
 
-func (v Vector) Print() string {
+func (v Vector) String() string {
 	s := ""
 	for i := 0; i < v.dimension-1; i++ {
 		s += fmt.Sprintf("%.2f, ", v.coordinates[i])

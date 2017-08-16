@@ -9,8 +9,8 @@ func TestPrint(t *testing.T) {
 	v := New([]float64{1, 2, 3})
 	//v2 := New([]float64{1, 2, 3})
 
-	if v.Print() != "Vector: 1.00, 2.00, 3.00" {
-		t.Errorf("Expect %s. Got: %s", "Vector: 1, 2, 3", v.Print())
+	if v.String() != "Vector: 1.00, 2.00, 3.00" {
+		t.Errorf("Expect %s. Got: %s", "Vector: 1, 2, 3", v)
 	}
 }
 
@@ -31,7 +31,7 @@ func TestEq(t *testing.T) {
 		v2 := New(a.vector2)
 
 		if v1.Eq(v2) != a.expected {
-			t.Errorf("%s and %s. Expected equals: %t, got %t", v1.Print(), v2.Print(), a.expected, v1.Eq(v2))
+			t.Errorf("%s and %s. Expected equals: %t, got %t", v1, v2, a.expected, v1.Eq(v2))
 		}
 	}
 }
@@ -54,7 +54,7 @@ func TestAdd(t *testing.T) {
 		s := v1.Add(v2)
 
 		if !s.Eq(a.expected) {
-			t.Errorf("%s + %s should be %s, got %s", v1.Print(), v2.Print(), a.expected.Print(), s.Print())
+			t.Errorf("%s + %s should be %s, got %s", v1, v2, a.expected, s)
 		}
 	}
 }
@@ -77,7 +77,7 @@ func TestSub(t *testing.T) {
 		s := v1.Sub(v2)
 
 		if !s.Eq(a.expected) {
-			t.Errorf("%s - %s should be %s, got %s", v1.Print(), v2.Print(), a.expected.Print(), s.Print())
+			t.Errorf("%s - %s should be %s, got %s", v1, v2, a.expected, s)
 		}
 	}
 }
@@ -101,7 +101,7 @@ func TestDot(t *testing.T) {
 		s := v1.Dot(v2)
 
 		if s != a.expected {
-			t.Errorf("%s . %s should be %.2f, got %.2f", v1.Print(), v2.Print(), a.expected, s)
+			t.Errorf("%s . %s should be %.2f, got %.2f", v1, v2, a.expected, s)
 		}
 	}
 }
@@ -124,7 +124,7 @@ func TestScalar(t *testing.T) {
 		s := v1.Scalar(a.num)
 
 		if !s.Eq(a.expected) {
-			t.Errorf("%s * %.2f should be %s, got %s", v1.Print(), a.num, a.expected.Print(), s.Print())
+			t.Errorf("%s * %.2f should be %s, got %s", v1, a.num, a.expected, s)
 		}
 	}
 }
@@ -144,7 +144,7 @@ func TestMagnitude(t *testing.T) {
 		v1 := New(a.vector1)
 
 		if v1.Magnitude() != a.m {
-			t.Errorf("Magnitude of %s shoulde be %f, got %f", v1.Print(), a.m, v1.Magnitude())
+			t.Errorf("Magnitude of %s shoulde be %f, got %f", v1, a.m, v1.Magnitude())
 		}
 	}
 }
@@ -168,7 +168,7 @@ func TestNormalize(t *testing.T) {
 		v2 := New(a.vector2)
 
 		if !v2.Eq(v1.Normalize()) {
-			t.Errorf("%s normalized to %s, got %s", v1.Print(), v2.Print(), v1.Normalize().Print())
+			t.Errorf("%s normalized to %s, got %s", v1, v2, v1.Normalize())
 		}
 	}
 }
@@ -191,7 +191,7 @@ func TestAngle(t *testing.T) {
 		v2 := New(a.vector2)
 
 		if a.expected != v1.Angle(v2, true) {
-			t.Errorf("Angle between %s and %s is %.16f, got %.16f", v1.Print(), v2.Print(), a.expected, v1.Angle(v2, true))
+			t.Errorf("Angle between %s and %s is %.16f, got %.16f", v1, v2, a.expected, v1.Angle(v2, true))
 		}
 	}
 }
@@ -211,7 +211,7 @@ func TestParaller(t *testing.T) {
 		v2 := New(a.vector2)
 
 		if a.expected != v1.Paraller(v2) {
-			t.Errorf("Parraler %s and %s is %t, got %t", v1.Print(), v2.Print(), a.expected, v1.Paraller(v2))
+			t.Errorf("Parraler %s and %s is %t, got %t", v1, v2, a.expected, v1.Paraller(v2))
 		}
 	}
 }
@@ -231,7 +231,7 @@ func TestOrthogonal(t *testing.T) {
 		v2 := New(a.vector2)
 
 		if a.expected != v1.Orthogonal(v2) {
-			t.Errorf("Orthogonal %s and %s is %t, got %t", v1.Print(), v2.Print(), a.expected, v1.Paraller(v2))
+			t.Errorf("Orthogonal %s and %s is %t, got %t", v1, v2, a.expected, v1.Paraller(v2))
 		}
 	}
 }
